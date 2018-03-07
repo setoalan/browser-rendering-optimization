@@ -65,24 +65,25 @@ APP.Main = (function() {
 
     // This seems odd. Surely we could just select the story
     // directly rather than looping through all of them.
-    var storyElements = document.querySelectorAll('.story');
+    // var storyElements = document.querySelectorAll('.story');
 
-    for (var i = 0; i < storyElements.length; i++) {
+    // Removed redundant for loop and if statement
+    // for (var i = 0; i < storyElements.length; i++) {
+    //
+    //   if (storyElements[i].getAttribute('id') === 's-' + key) {
 
-      if (storyElements[i].getAttribute('id') === 's-' + key) {
+    details.time *= 1000;
+    var story = document.querySelector(`#s-${key}`); // Queried using id key
+    var html = storyTemplate(details);
+    story.innerHTML = html;
+    story.addEventListener('click', onStoryClick.bind(this, details));
+    // story.classList.add('clickable'); // Removed undefined class
 
-        details.time *= 1000;
-        var story = storyElements[i];
-        var html = storyTemplate(details);
-        story.innerHTML = html;
-        story.addEventListener('click', onStoryClick.bind(this, details));
-        story.classList.add('clickable');
+    // Tick down. When zero we can batch in the next load.
+    storyLoadCount--;
 
-        // Tick down. When zero we can batch in the next load.
-        storyLoadCount--;
-
-      }
-    }
+    //   }
+    // }
 
     // Colorize on complete.
     if (storyLoadCount === 0)
